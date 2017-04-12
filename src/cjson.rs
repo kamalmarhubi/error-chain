@@ -9,7 +9,7 @@ use std::io;
 pub fn canonicalize(jsn: json::Value) -> Result<Vec<u8>, String> {
     let converted = convert(jsn)?;
     let mut buf = Vec::new();
-    converted.write(&mut buf);
+    converted.write(&mut buf)?;
     Ok(buf)
 }
 
@@ -102,7 +102,6 @@ fn convert(jsn: json::Value) -> Result<Value, String> {
             Ok(Value::Object(out))
         }
         json::Value::String(s) => Ok(Value::String(s)),
-        x => Err(format!("Value not supported: {}", x)),
     }
 }
 
